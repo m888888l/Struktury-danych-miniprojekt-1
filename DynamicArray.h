@@ -6,8 +6,9 @@ class DynamicArray{
     ~DynamicArray();
     
     void push_back(int value);
-    void set(int i, int value);
-    int get(int i);
+    void set(int index, int value);
+    void insert(int index, int value);
+    int get(int index);
     int* find(int value);
 
     private:
@@ -17,7 +18,7 @@ class DynamicArray{
         int capacity;
 };
 
-DynamicArray::DynamicArray(int s):capacity(s), size(0){
+DynamicArray::DynamicArray(int s) : capacity(s), size(0){
     data = new int[s];
 }
 
@@ -26,9 +27,7 @@ DynamicArray::~DynamicArray(){
 }
 
 void DynamicArray::push_back(int value){
-    if(size == capacity){
-        resize();
-    }
+    if(size == capacity) resize();
 
     data[size] = value;
     size++;
@@ -48,12 +47,14 @@ void DynamicArray::resize(){
     data = tempData;
 }
 
-void DynamicArray::set(int i, int value){
-    data[i] = value;
+void DynamicArray::set(int index, int value){
+    if(index < 0 || index >= size) return;
+    data[index] = value;
 }
 
-int DynamicArray::get(int i){
-    return data[i];
+int DynamicArray::get(int index){
+    if(index < 0 || index >= size) return;
+    return data[index];
 }
 
 int* DynamicArray::find(int value){
@@ -61,4 +62,16 @@ int* DynamicArray::find(int value){
         if(data[i] == value) return &data[i];
     }
     return nullptr;
+}
+
+void DynamicArray::insert(int index, int value){
+    if(index < 0 || index > size) return;
+    if(size == capacity) resize();
+
+    for(int i = size; i > index; i--){
+        data[i] = data[i-1];
+    }
+
+    data[index] = value;
+    size++;
 }
