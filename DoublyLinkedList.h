@@ -3,14 +3,15 @@
 struct Node
 {
     int data;
+    Node* previous;
     Node* next;
     Node(int value) : data(value), next(nullptr){};
 };
 
-class SinglyLinkedList{
+class DoublyLinkedList{
     public:
-        SinglyLinkedList();
-        ~SinglyLinkedList();
+        DoublyLinkedList();
+        ~DoublyLinkedList();
 
         void push_back(int value);
         void push_front(int value);
@@ -25,9 +26,9 @@ class SinglyLinkedList{
         int size;
 };
 
-SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0){}
+DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr), size(0){}
 
-SinglyLinkedList::~SinglyLinkedList(){
+DoublyLinkedList::~DoublyLinkedList(){
     Node* current = head;
 
     while(current != nullptr){
@@ -37,7 +38,7 @@ SinglyLinkedList::~SinglyLinkedList(){
     }
 }
 
-void SinglyLinkedList::push_back(int value){
+void DoublyLinkedList::push_back(int value){
     Node* newNode = new Node(value);
     if(head == nullptr){
         head = newNode;
@@ -49,7 +50,7 @@ void SinglyLinkedList::push_back(int value){
     size++;
 }
 
-void SinglyLinkedList::push_front(int value){
+void DoublyLinkedList::push_front(int value){
     Node* newNode = new Node(value);
     if(head == nullptr){
         head = newNode;
@@ -61,7 +62,7 @@ void SinglyLinkedList::push_front(int value){
     size++;
 }
 
-void SinglyLinkedList::pop_back(){
+void DoublyLinkedList::pop_back(){
     if(head == nullptr) return;
 
     if(head == tail){
@@ -69,29 +70,31 @@ void SinglyLinkedList::pop_back(){
         head == nullptr;
         tail == nullptr;
     }else{
-        Node* current = head;
-        while(current->next != head){
-            current = current->next;
-        }
-        delete tail;
-        tail = current;
-        tail->next = nullptr;
+        Node* tempNode = tail;
+        tail = tail->previous;
+        delete tempNode;
     }
 
     size--;
 }
 
-void SinglyLinkedList::pop_front(){
+void DoublyLinkedList::pop_front(){
     if(head == nullptr) return;
 
-    Node* tempNode = head;
-    head = head->next;
-    delete tempNode;
+    if(head == tail){
+        delete head;
+        head == nullptr;
+        tail == nullptr;
+    }else{
+        Node* tempNode = head;
+        head = head->next;
+        delete tempNode;
+    }
 
     size--;
 }
 
-void SinglyLinkedList::insert(int index, int value){
+void DoublyLinkedList::insert(int index, int value){
     if(index < 0 || index > size) return;
     if(head == nullptr || index == 0){
         push_front(value);
@@ -115,7 +118,7 @@ void SinglyLinkedList::insert(int index, int value){
     size++;
 }
 
-int* SinglyLinkedList::find(int value){
+int* DoublyLinkedList::find(int value){
     Node* current = head;
     while(current != nullptr){
         if(current->data == value) return &(current->data); 
