@@ -16,6 +16,7 @@ class SinglyLinkedList{
         void push_front(int value);
         void pop_back();
         void pop_front();
+        void pop_at(int index);
         void insert(int index, int value);
         int* find(int value);
     
@@ -66,11 +67,11 @@ void SinglyLinkedList::pop_back(){
 
     if(head == tail){
         delete head;
-        head == nullptr;
-        tail == nullptr;
+        head = nullptr;
+        tail = nullptr;
     }else{
         Node* current = head;
-        while(current->next != head){
+        while(current->next != tail){
             current = current->next;
         }
         delete tail;
@@ -84,20 +85,48 @@ void SinglyLinkedList::pop_back(){
 void SinglyLinkedList::pop_front(){
     if(head == nullptr) return;
 
-    Node* tempNode = head;
-    head = head->next;
-    delete tempNode;
+    if(head == tail){
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+    }else{
+        Node* tempNode = head;
+        head = head->next;
+        delete tempNode;
+    }
+    size--;
+}
+
+void SinglyLinkedList::pop_at(int index){
+    if(index < 0 || index >= size) return;
+    if(index == 0){
+        pop_front();
+        return;
+    };
+    if(index == size-1){
+        pop_back();
+        return;
+    }
+
+    Node* current = head;
+    for(int i = 0; i < index-1; i++){
+        current = current->next;
+    }
+
+    Node* deleted = current->next;
+    current->next = deleted->next;
+    delete deleted;
 
     size--;
 }
 
 void SinglyLinkedList::insert(int index, int value){
-    if(index < 0 || index > size) return;
-    if(head == nullptr || index == 0){
+    if(index < 0 || index > size) return; //jak index wychodzi poza liste to funkcja sie konczy
+    if(head == nullptr || index == 0){ //jesli lista jest pusta lub insertujemy na poczatek uzywamy metody push_front
         push_front(value);
         return;
     }
-    if(index == size){
+    if(index == size){ //jesli insertujemy na koniec uzywamy push_back
         push_back(value);
         return;
     }

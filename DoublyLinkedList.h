@@ -1,11 +1,11 @@
 #pragma once
 
-struct Node
+struct DoubleNode
 {
     int data;
-    Node* previous;
-    Node* next;
-    Node(int value) : data(value), next(nullptr){};
+    DoubleNode* previous;
+    DoubleNode* next;
+    DoubleNode(int value) : data(value), next(nullptr), previous(nullptr){};
 };
 
 class DoublyLinkedList{
@@ -17,19 +17,20 @@ class DoublyLinkedList{
         void push_front(int value);
         void pop_back();
         void pop_front();
+        void pop_at(int index);
         void insert(int index, int value);
         int* find(int value);
     
     private:
-        Node* head;
-        Node* tail;
+        DoubleNode* head;
+        DoubleNode* tail;
         int size;
 };
 
 DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr), size(0){}
 
 DoublyLinkedList::~DoublyLinkedList(){
-    Node* current = head;
+    DoubleNode* current = head;
 
     while(current != nullptr){
         head = current->next;
@@ -39,25 +40,27 @@ DoublyLinkedList::~DoublyLinkedList(){
 }
 
 void DoublyLinkedList::push_back(int value){
-    Node* newNode = new Node(value);
+    DoubleNode* newDoubleNode = new DoubleNode(value);
     if(head == nullptr){
-        head = newNode;
-        tail = newNode;
+        head = newDoubleNode;
+        tail = newDoubleNode;
     }else{
-        tail->next = newNode;
-        tail = newNode;
+        tail->next = newDoubleNode;
+        newDoubleNode->previous = tail;
+        tail = newDoubleNode;
     }
     size++;
 }
 
 void DoublyLinkedList::push_front(int value){
-    Node* newNode = new Node(value);
+    DoubleNode* newDoubleNode = new DoubleNode(value);
     if(head == nullptr){
-        head = newNode;
-        tail = newNode;
+        head = newDoubleNode;
+        tail = newDoubleNode;
     }else{
-        newNode->next = head;
-        head = newNode;
+        newDoubleNode->next = head;
+        head->previous = newDoubleNode;
+        head = newDoubleNode;
     }
     size++;
 }
@@ -67,12 +70,12 @@ void DoublyLinkedList::pop_back(){
 
     if(head == tail){
         delete head;
-        head == nullptr;
-        tail == nullptr;
+        head = nullptr;
+        tail = nullptr;
     }else{
-        Node* tempNode = tail;
+        DoubleNode* tempDoubleNode = tail;
         tail = tail->previous;
-        delete tempNode;
+        delete tempDoubleNode;
     }
 
     size--;
@@ -86,9 +89,45 @@ void DoublyLinkedList::pop_front(){
         head == nullptr;
         tail == nullptr;
     }else{
-        Node* tempNode = head;
+        DoubleNode* tempDoubleNode = head;
         head = head->next;
-        delete tempNode;
+        delete tempDoubleNode;
+    }
+
+    size--;
+}
+
+void DoublyLinkedList::pop_at(int index){
+    if(index < 0 || index >= size) return;
+    if(index == 0){
+        pop_front();
+        return;
+    }
+    if(index == size-1){
+        pop_back();
+        return;
+    }
+
+    if(index < size/2){
+        DoubleNode* current = head;
+        for(int i = 0; i < index-1; i++){
+            current = current->next;
+        }
+
+        DoubleNode* deleted = current->next;
+        current->next = deleted->next;
+        (deleted->next)->previous = current;
+        delete deleted;
+    }else{
+        DoubleNode* current = tail;
+        for(int i = size-1; i > index+1; i--){
+            current = current->previous;
+        }
+
+        DoubleNode* deleted = current->previous;
+        current->previous = deleted->previous;
+        (deleted->previous)->next = current;
+        delete deleted;
     }
 
     size--;
@@ -105,21 +144,39 @@ void DoublyLinkedList::insert(int index, int value){
         return;
     }
 
+    if(index < size/2){
 
-    Node* current = head;
-    for(int i = 0; i < index-1; i++){
-        current = current->next;
+        DoubleNode* current = head;
+        for(int i = 0; i < index-1; i++){
+            current = current->next;
+        }
+        
+        DoubleNode* newDoubleNode = new DoubleNode(value);
+        
+        newDoubleNode->next = current->next;
+        current->next = newDoubleNode;
+        newDoubleNode->previous = current;
+        (newDoubleNode->next)->previous = newDoubleNode;
+        
+    }else{
+        DoubleNode* current = tail;
+        for(int i = size-1; i > index; i--){
+            current = current->previous;
+        }
+        
+        DoubleNode* newDoubleNode = new DoubleNode(value);
+        
+        newDoubleNode->previous = current->previous;
+        current->previous = newDoubleNode;
+        newDoubleNode->next = current;
+        (newDoubleNode->previous)->next = newDoubleNode;
     }
-    
-    Node* newNode = new Node(value);
-    newNode->next = current->next;
-    current->next = newNode;
 
     size++;
 }
 
 int* DoublyLinkedList::find(int value){
-    Node* current = head;
+    DoubleNode* current = head;
     while(current != nullptr){
         if(current->data == value) return &(current->data); 
         current = current->next;

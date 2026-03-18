@@ -8,7 +8,7 @@ class DynamicArray{
     void push_back(int value);
     void set(int index, int value);
     void insert(int index, int value);
-    int get(int index);
+    int* get(int index);
     int* find(int value);
 
     private:
@@ -52,9 +52,9 @@ void DynamicArray::set(int index, int value){
     data[index] = value;
 }
 
-int DynamicArray::get(int index){
-    if(index < 0 || index >= size) return;
-    return data[index];
+int* DynamicArray::get(int index){
+    if(index < 0 || index >= size) return nullptr;
+    return &(data[index]);
 }
 
 int* DynamicArray::find(int value){
