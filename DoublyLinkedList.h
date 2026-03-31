@@ -47,6 +47,7 @@ void DoublyLinkedList::push_back(int value){
     }else{
         tail->next = newDoubleNode;
         newDoubleNode->previous = tail;
+        tail->next=nullptr;
         tail = newDoubleNode;
     }
     size++;
