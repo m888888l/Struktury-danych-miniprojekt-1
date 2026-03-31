@@ -7,6 +7,7 @@ class DynamicArray{
     
     void push_back(int value);
     void set(int index, int value);
+    void pop_at(int index);
     void insert(int index, int value);
     int* get(int index);
     int* find(int value);
@@ -62,6 +63,14 @@ int* DynamicArray::find(int value){
         if(data[i] == value) return &data[i];
     }
     return nullptr;
+}
+
+void DynamicArray::pop_at(int index){
+    if(index < 0 || index >= size) return;
+    for(int i = index; i < size-1; i++){
+        data[i] = data[i+1];
+    }
+    size--;
 }
 
 void DynamicArray::insert(int index, int value){
