@@ -92,6 +92,7 @@ void DoublyLinkedList::pop_front(){
     }else{
         DoubleNode* tempDoubleNode = head;
         head = head->next;
+        head->previous = nullptr;
         delete tempDoubleNode;
     }
 
