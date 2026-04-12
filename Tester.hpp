@@ -13,7 +13,7 @@ using namespace std;
 using namespace std::chrono;
 
 const int sizes[8] = {250000,   500000,  750000,  1000000,
-                      1250000, 1500000, 1750000, 10000000};
+                      1250000, 1500000, 1750000, 2000000};
 const int samples = 100;
 
 // Struktura przechowująca średnie czasy wykonania dla pojedyńczej operacji w 3

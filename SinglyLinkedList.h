@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-struct Node
+struct Node //mala struktura przedstawiajaca jeden element
 {
     int data;
     Node* next;
@@ -23,9 +23,9 @@ class SinglyLinkedList{
         int* find(int value);
     
     private:
-        Node* head;
-        Node* tail;
-        int size;
+        Node* head; //wskaznik na pierwszy element
+        Node* tail; //wskaznik na ostatni element
+        int size; //niby niepotrzebne, mozna by zrobic na to metode, ale to jest bardziej wydajne, trzeba jednak pamietac aby zmieniac to pole w metodach zmieniajacych rozmiar
 };
 
 SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0){}
@@ -33,7 +33,7 @@ SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0){}
 SinglyLinkedList::~SinglyLinkedList(){
     Node* current = head;
 
-    while(current != nullptr){
+    while(current != nullptr){ //trzeba sobie zwolnic pamiec bo inaczej to sie nie zwolni :)
         head = current->next;
         delete current;
         current = head;
@@ -41,43 +41,43 @@ SinglyLinkedList::~SinglyLinkedList(){
 }
 
 void SinglyLinkedList::push_back(int value){
-    Node* newNode = new Node(value);
-    if(head == nullptr){
+    Node* newNode = new Node(value); //alokuje pamiec dla nowego Node'a i przypisuje wskaznik na niego do newNode
+    if(head == nullptr){ //jesli head == nullptr to znaczy ze lista jest pusta
         head = newNode;
         tail = newNode;
     }else{
-        tail->next = newNode;
-        tail = newNode;
+        tail->next = newNode; //ostatni element teraz wksazuje na nowo dodany element zamiast na nullptr
+        tail = newNode; //tail teraz wskazuje na nowy ostatni element
     }
-    size++;
+    size++; //trzeba pamietac bo bedzie problem
 }
 
 void SinglyLinkedList::push_front(int value){
-    Node* newNode = new Node(value);
+    Node* newNode = new Node(value); //to samo co wczesniej
     if(head == nullptr){
         head = newNode;
         tail = newNode;
     }else{
-        newNode->next = head;
-        head = newNode;
+        newNode->next = head; //nowo dodany element wskazuje na pierwszy element list
+        head = newNode;//head teraz wskazuje na nowy pierwszy element
     }
     size++;
 }
 
 void SinglyLinkedList::pop_back(){
-    if(head == nullptr) return;
+    if(head == nullptr) return; //jesli lista jest pusta to nic nie robi
 
-    if(head == tail){
+    if(head == tail){ //jesli head i tail wskazuja na to samo, to znaczy ze jest tylko jeden element
         delete head;
         head = nullptr;
         tail = nullptr;
     }else{
-        Node* current = head;
-        while(current->next != tail){
+        Node* current = head;//lista jednokierunkowa, a wiec trzeba leciec od przodu
+        while(current->next != tail){ //lecimy az current nie wskazuje na przedostatni element
             current = current->next;
         }
-        delete tail;
-        tail = current;
+        delete tail;//zwlaniamy pamiec w ktorej byl ostatni element
+        tail = current;//tail wskazuje na przedostatni element (teraz w sumie juz ostatni)
         tail->next = nullptr;
     }
 
@@ -92,9 +92,9 @@ void SinglyLinkedList::pop_front(){
         head = nullptr;
         tail = nullptr;
     }else{
-        Node* tempNode = head;
-        head = head->next;
-        delete tempNode;
+        Node* tempNode = head;//tymczasowy wskaznik, zeby bylo wiadomo jaka pamiec zwolnic
+        head = head->next;//head wskazuje teraz na drugi element (zaraz pierwszy)
+        delete tempNode;//zwalnia pamiec po pierwszym elemencie
     }
     size--;
 }
@@ -111,13 +111,13 @@ void SinglyLinkedList::pop_at(int index){
     }
 
     Node* current = head;
-    for(int i = 0; i < index-1; i++){
+    for(int i = 0; i < index-1; i++){//lecimy az bedziemy na elemencie przed elementem ktory chcemy usunac
         current = current->next;
     }
 
-    Node* deleted = current->next;
-    current->next = deleted->next;
-    delete deleted;
+    Node* deleted = current->next; //wskaznik tymczasowy do przechowywania adresu z ktorego pamiec chcemy zwolnic
+    current->next = deleted->next; //element przed tym ktory usuwamy teraz wskazuje na element za tym ktory usuwamy
+    delete deleted; //zwlaniamy pamiec po usuwamyn elemencie
 
     size--;
 }
@@ -134,14 +134,14 @@ void SinglyLinkedList::insert(int index, int value){
     }
 
 
-    Node* current = head;
-    for(int i = 0; i < index-1; i++){
+    Node* current = head; //robimy sobie "iterator"
+    for(int i = 0; i < index-1; i++){//lecimy az current bedzie wskazywac na element za ktorym chcemy wstawic nowy element
         current = current->next;
     }
     
-    Node* newNode = new Node(value);
-    newNode->next = current->next;
-    current->next = newNode;
+    Node* newNode = new Node(value); //alokujemy pamiec dla nowego elementu i od razu przypisujemy mu wartosc
+    newNode->next = current->next;//nowy element wskazuje na to na co wskazuje element przed nim
+    current->next = newNode;//element przed nim poprawnie teraz wskazuje na nowy element
 
     size++;
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-struct DoubleNode
+struct DoubleNode//struktura przechowujaca 1 element, teraz z polem previous wskazujacym na poprzedni element
 {
     int data;
     DoubleNode* previous;
@@ -67,7 +67,7 @@ void DoublyLinkedList::push_front(int value){
     size++;
 }
 
-void DoublyLinkedList::pop_back(){
+void DoublyLinkedList::pop_back(){//to jest prostsze niz w liscie jednokierunkowej
     if(head == nullptr) return;
 
     if(head == tail){
@@ -112,7 +112,7 @@ void DoublyLinkedList::pop_at(int index){
         return;
     }
 
-    if(index < size/2){
+    if(index < size/2){ //implementacja taka sama jak w singly linked list, z ta roznica ze liczmy czy szybciej leciec od konca czy od przodu
         DoubleNode* current = head;
         for(int i = 0; i < index-1; i++){
             current = current->next;
@@ -148,7 +148,7 @@ void DoublyLinkedList::insert(int index, int value){
         return;
     }
 
-    if(index < size/2){
+    if(index < size/2){//implementacja taka sama jak w singly linked list, z ta roznica ze liczmy czy szybciej leciec od konca czy od przodu
 
         DoubleNode* current = head;
         for(int i = 0; i < index-1; i++){
