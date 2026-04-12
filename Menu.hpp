@@ -30,8 +30,8 @@ void Menu::menu() {
     cout << "\n\n1. Tablica dynamiczna\n"
             "2. Lista jednokierunkowa\n"
             "3. Lista dwukierunkowa\n"
-            "4. Wyjdź\n"
-            "Którą strukturę chcesz edytować: ";
+            "4. Wyjdz\n"
+            "Ktora strukture chcesz edytowac: ";
     cin >> action;
 
     if (action > 0 && action < 4) takeAction(action);
@@ -42,7 +42,7 @@ void Menu::menu() {
 
       return;
     }
-    else cout << "\nPodano złą wartość";
+    else cout << "\nPodano zla wartosc";
   }
 }
 
@@ -60,20 +60,20 @@ void Menu::takeAction(int dataStructure) {
   } else {
     dl_list->print();
   }
-  // Pyta o akcje i wysyła do odpowiedniej struktury
-  cout << "\n\n1. Dodaj element na początek struktury\n"
-          "2. Usuń element z początku struktury\n"
+  // Pyta o akcje i wysyla do odpowiedniej struktury
+  cout << "\n\n1. Dodaj element na poczatek struktury\n"
+          "2. Usun element z poczatku struktury\n"
           "3. Dodaj element na koniec struktury\n"
-          "4. Usuń element z końca struktury\n"
+          "4. Usun element z konca struktury\n"
           "5. Dodaj element do wybranego miejsca\n"
-          "6. Usuń element z wybranego miejsca\n"
-          "7. Wyjdź\n"
-          "Co chcesz zrobić: ";
+          "6. Usun element z wybranego miejsca\n"
+          "7. Wyjdz\n"
+          "Co chcesz zrobic: ";
   cin >> action;
   system("clear");
   if (action == 7) return;
   if (action == 1 || action == 3 || action == 5) {
-    cout << "\n\nJaki element chcesz dodać: ";
+    cout << "\n\nJaki element chcesz dodac: ";
     cin >> value;
   }
   if (action == 5 || action == 6) {
@@ -138,7 +138,7 @@ void Menu::takeAction(int dataStructure) {
     }
     break;
   default:
-    cout << "Podano złą wartość\n" << endl;
+    cout << "Podano zla wartosc\n" << endl;
     break;
   }
   menu();

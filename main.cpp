@@ -9,8 +9,8 @@ int main() {
   int choice;
 
   cout << "1. Tryb pracy z menu\n"
-          "2. Tryb automatycznych testów\n"
-          "Który tryb pracy chcesz wybrać: ";
+          "2. Tryb automatycznych testow\n"
+          "Ktory tryb pracy chcesz wybrac: ";
   cin >> choice;
   switch (choice) {
   case 1:
@@ -20,7 +20,7 @@ int main() {
     tester.run("wyniki_testow.csv");
     break;
   default:
-    cout << "Podano złą wartość\n\n";
+    cout << "Podano zla wartosc\n\n";
     break;
   }
 
