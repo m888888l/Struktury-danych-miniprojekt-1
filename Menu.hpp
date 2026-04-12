@@ -27,6 +27,7 @@ void Menu::menu() {
   while (1) {
     system("clear");
     action = 0;
+    // Wybór struktury
     cout << "\n\n1. Tablica dynamiczna\n"
             "2. Lista jednokierunkowa\n"
             "3. Lista dwukierunkowa\n"
@@ -34,6 +35,7 @@ void Menu::menu() {
             "Ktora strukture chcesz edytowac: ";
     cin >> action;
 
+    // W zależności od wyboru odesłanie do odpowiedniego fragmentu kodu
     if (action > 0 && action < 4) takeAction(action);
     else if (action == 4){
       delete d_array;
@@ -47,12 +49,14 @@ void Menu::menu() {
 }
 
 void Menu::takeAction(int dataStructure) {
+  // Zerowanie wyborów aby przeciwdziałać błędom
   action = 0;
   value = 0;
   index = 0;
   system("clear");
   cout << "\n";
 
+  // Wyświetlanie struktury dla ułatwienia operacji
   if (dataStructure == 1) {
     d_array->print();
   } else if (dataStructure == 2) {
@@ -71,6 +75,7 @@ void Menu::takeAction(int dataStructure) {
           "Co chcesz zrobic: ";
   cin >> action;
   system("clear");
+  // Jeśli to konieczne to pyta o wartość i index
   if (action == 7) return;
   if (action == 1 || action == 3 || action == 5) {
     cout << "\n\nJaki element chcesz dodac: ";
@@ -81,7 +86,7 @@ void Menu::takeAction(int dataStructure) {
     cin >> index;
   }
 
-
+  // Odsyłanie do odpowiedniej metody
   switch (action) {
   case 1:
     if (dataStructure == 1) {
