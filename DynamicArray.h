@@ -94,8 +94,9 @@ void DynamicArray::insert(int index, int value){
 
 void DynamicArray::print() {
   std::cout << "[ ";
-  for (int i = 0; i < size; i++) {
-    std::cout << data[i] << " ";
+  for (int i = 0; i < size-1; i++) {
+    std::cout << data[i] << "; ";
   }
-  std::cout << "]\n";
+  if(size >= 1) std::cout << data[size-1];
+  std::cout << " ]\n";
 }
