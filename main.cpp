@@ -1,33 +1,28 @@
-#include <iostream>
-#include <cstdlib>
-#include "DynamicArray.h"
-#include "SinglyLinkedList.h"
-#include "DoublyLinkedList.h"
+#include "Menu.hpp"
+#include "Tester.hpp"
 
 using namespace std;
 
-int main(){
-    srand(0);
-    DynamicArray* d_array = new DynamicArray(5);
-    SinglyLinkedList* s_list = new SinglyLinkedList;
-    DoublyLinkedList* d_list = new DoublyLinkedList;
+int main() {
+  Menu menu;
+  Tester tester;
+  int choice;
 
+  cout << "1. Tryb pracy z menu\n"
+          "2. Tryb automatycznych testów\n"
+          "Który tryb pracy chcesz wybrać: ";
+  cin >> choice;
+  switch (choice) {
+  case 1:
+    menu.menu();
+    break;
+  case 2:
+    tester.run("wyniki_testow.csv");
+    break;
+  default:
+    cout << "Podano złą wartość\n\n";
+    break;
+  }
 
-    int now = 0;
-
-    for(int i = 0; i < 5; i++){
-        now = rand();
-        d_array->push_back(now);
-        s_list->push_back(now);
-        d_list->push_back(now);
-    }
-
-
-    cout<<*(d_array->find(2437))<<"\n";
-    cout<<*(s_list->find(2437))<<"\n";
-    cout<<*(d_list->find(2437))<<"\n";
-
-
-
-return 0;
+  return 0;
 }
