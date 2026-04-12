@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct DoubleNode
 {
@@ -19,6 +20,7 @@ class DoublyLinkedList{
         void pop_front();
         void pop_at(int index);
         void insert(int index, int value);
+        void print();
         int* find(int value);
     
     private:
@@ -184,4 +186,14 @@ int* DoublyLinkedList::find(int value){
         current = current->next;
     }
     return nullptr;
+}
+
+void DoublyLinkedList::print() {
+  DoubleNode *current = head;
+  std::cout << "Head <-> ";
+  while (current != nullptr) {
+    std::cout << current->data << " <-> ";
+    current = current->next;
+  }
+  std::cout << "NULL\n";
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 struct Node
 {
@@ -18,6 +19,7 @@ class SinglyLinkedList{
         void pop_front();
         void pop_at(int index);
         void insert(int index, int value);
+        void print();
         int* find(int value);
     
     private:
@@ -151,4 +153,14 @@ int* SinglyLinkedList::find(int value){
         current = current->next;
     }
     return nullptr;
+}
+
+void SinglyLinkedList::print() {
+  Node *current = head;
+  std::cout << "Head -> ";
+  while (current != nullptr) {
+    std::cout << current->data << " -> ";
+    current = current->next;
+  }
+  std::cout << "NULL\n";
 }

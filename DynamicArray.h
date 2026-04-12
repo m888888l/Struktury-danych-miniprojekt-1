@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 class DynamicArray{
     public:
@@ -9,6 +10,7 @@ class DynamicArray{
     void set(int index, int value);
     void pop_at(int index);
     void insert(int index, int value);
+    void print();
     int* get(int index);
     int* find(int value);
 
@@ -83,4 +85,12 @@ void DynamicArray::insert(int index, int value){
 
     data[index] = value;
     size++;
+}
+
+void DynamicArray::print() {
+  std::cout << "[ ";
+  for (int i = 0; i < size; i++) {
+    std::cout << data[i] << " ";
+  }
+  std::cout << "]\n";
 }
