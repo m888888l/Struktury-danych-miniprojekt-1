@@ -9,6 +9,7 @@ class DynamicArray{
     void push_back(int value);
     void set(int index, int value);
     void pop_at(int index);
+    void pop_back();
     void insert(int index, int value);
     void print();
     int* get(int index);
@@ -73,6 +74,10 @@ void DynamicArray::pop_at(int index){
         data[i] = data[i+1];
     }
     size--;
+}
+
+void DynamicArray::pop_back(){
+    pop_at(size-1);
 }
 
 void DynamicArray::insert(int index, int value){
