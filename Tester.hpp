@@ -145,12 +145,18 @@ void Tester::run(const string &outputFilename) {
     pushBackRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_arrays[i]->pop_at(currentSize);
     end = high_resolution_clock::now();
     popBackRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -159,12 +165,18 @@ void Tester::run(const string &outputFilename) {
     pushFrontRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_arrays[i]->pop_at(0);
     end = high_resolution_clock::now();
     popFrontRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -173,12 +185,18 @@ void Tester::run(const string &outputFilename) {
     insertRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_arrays[i]->pop_at(randIndex);
     end = high_resolution_clock::now();
     popRandRes.arrTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDynamicArray();
+    setupStructureDynamicArray(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++) {
@@ -199,12 +217,18 @@ void Tester::run(const string &outputFilename) {
     pushBackRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
+        
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       s_lists[i]->pop_at(randIndex);
     end = high_resolution_clock::now();
     popRandRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -213,12 +237,18 @@ void Tester::run(const string &outputFilename) {
     insertRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       s_lists[i]->pop_front();
     end = high_resolution_clock::now();
     popFrontRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -227,12 +257,18 @@ void Tester::run(const string &outputFilename) {
     pushFrontRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       s_lists[i]->pop_back();
     end = high_resolution_clock::now();
     popBackRes.sllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureSinglyList();
+    setupStructureSinglyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++) {
@@ -245,12 +281,16 @@ void Tester::run(const string &outputFilename) {
 
     // Mierzenie czasów związanych z listą dwukierunkową
     setupStructureDoublyList(currentSize);
+    
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_lists[i]->push_back(valToAdd);
     end = high_resolution_clock::now();
     pushBackRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -259,12 +299,18 @@ void Tester::run(const string &outputFilename) {
     popBackRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_lists[i]->push_front(valToAdd);
     end = high_resolution_clock::now();
     pushFrontRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
@@ -273,6 +319,9 @@ void Tester::run(const string &outputFilename) {
     popFrontRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_lists[i]->insert(randIndex, valToAdd);
@@ -280,12 +329,18 @@ void Tester::run(const string &outputFilename) {
     insertRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
 
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
+
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++)
       d_lists[i]->pop_at(randIndex);
     end = high_resolution_clock::now();
     popRandRes.dllTime =
         duration_cast<nanoseconds>(end - start).count() / SAMPLES;
+
+    cleanupStructureDoublyList();
+    setupStructureDoublyList(currentSize);
 
     start = high_resolution_clock::now();
     for (int i = 0; i < SAMPLES; i++) {
